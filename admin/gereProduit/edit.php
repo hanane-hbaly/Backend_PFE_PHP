@@ -22,7 +22,7 @@ if ($Imagep == "empty") {
              "Typep" => $Typep,
     );
 } else {
-   deleteFile("../../upload/produits"  , $imageold) ; 
+   deleteFile("../../upload/produits"  ,$imageold) ; 
     $data = array(
         "Nomp" => $Nomp,
         "PrixP" => $Prixp,

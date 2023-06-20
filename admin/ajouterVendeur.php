@@ -11,11 +11,11 @@ $cin = filterRequest("cin");
 
 
 
-$stmt = $con->prepare("SELECT * FROM users WHERE id = ? OR cin = ? ");
-$stmt->execute(array($id, $cin));
+$stmt = $con->prepare("SELECT * FROM users WHERE id = ?  ");
+$stmt->execute(array($id));
 $count = $stmt->rowCount();
 if ($count > 0) {
-    printFailure("id OR cin");
+    printFailure("id ");
 } else {
 
     $data = array(

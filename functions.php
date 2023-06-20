@@ -35,9 +35,10 @@ function getData($table, $where = null, $values = null)
     $stmt->execute($values);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $count  = $stmt->rowCount();
-    $type=$data['type']; 
     if ($count > 0) {
-        echo json_encode(array("status" => "success","message"=>$type, "data" => $data));
+        $type=$data['type']; 
+        $etat=$data['service']; 
+        echo json_encode(array("status" => "success","message"=>$type,"etat"=>$etat, "data" => $data));
     } else {
         echo json_encode(array("status" => "failure"));
    }
@@ -70,9 +71,37 @@ function getDataFromDeuxtable($table1, $table2, $where = null, $values = null)
  
 
 
+// function insertData($table, $data, $json = true)
+// {
+//     global $con;
+//     foreach ($data as $field => $v)
+//         $ins[] = ':' . $field;
+//     $ins = implode(',', $ins);
+//     $fields = implode(',', array_keys($data));
+//     $sql = "INSERT INTO $table ($fields) VALUES ($ins)";
+
+//     $stmt = $con->prepare($sql);
+//     foreach ($data as $f => $v) {
+//         $stmt->bindValue(':' . $f, $v);
+//     }
+//     $stmt->execute();
+//     $count = $stmt->rowCount();
+//     if ($json == true) {
+//         if ($count > 0) {
+//             echo json_encode(array("status" => "success"));
+//         } else {
+//             echo json_encode(array("status" => "failure"));
+//         }
+//     }  
+//     return $count;
+// }
 function insertData($table, $data, $json = true)
 {
     global $con;
+    
+    // Désactiver la vérification des contraintes de clé étrangère
+    $con->exec('SET FOREIGN_KEY_CHECKS = 0');
+    
     foreach ($data as $field => $v)
         $ins[] = ':' . $field;
     $ins = implode(',', $ins);
@@ -85,6 +114,10 @@ function insertData($table, $data, $json = true)
     }
     $stmt->execute();
     $count = $stmt->rowCount();
+    
+    // Réactiver la vérification des contraintes de clé étrangère
+    $con->exec('SET FOREIGN_KEY_CHECKS = 1');
+    
     if ($json == true) {
         if ($count > 0) {
             echo json_encode(array("status" => "success"));
@@ -94,6 +127,7 @@ function insertData($table, $data, $json = true)
     }  
     return $count;
 }
+
 
 
 function insertDatasansSu($table, $data, $json = true)
@@ -164,7 +198,7 @@ function imageUpload($dir,$imageRequest)
         $imagename  = rand(1000, 10000) . $_FILES[$imageRequest]['name'];
         $imagetmp   = $_FILES[$imageRequest]['tmp_name'];
         $imagesize  = $_FILES[$imageRequest]['size'];
-        $allowExt   = array("jpg", "png", "gif", "mp3", "pdf","svg");
+        $allowExt   = array("jpg", "png", "gif", "mp4", "pdf","svg");
         $strToArray = explode(".", $imagename);
         $ext        = end($strToArray);
         $ext        = strtolower($ext);

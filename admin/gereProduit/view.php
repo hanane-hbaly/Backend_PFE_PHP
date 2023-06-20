@@ -2,5 +2,5 @@
 
 include "../../connect.php" ; 
 
-getAllData("produit","1=1") ;
+getAllData("produit","etat=1") ;
 ?>  

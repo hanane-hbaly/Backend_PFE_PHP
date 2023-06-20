@@ -13,7 +13,8 @@ $cin = filterRequest("cin");
 // $type=$row['type'];
 // result($count,$type) ; 
 
-getData("users","id = ? and cin = ? and service=1",array($id,$cin));
+// getData("users","id = ? and cin = ? and service=1",array($id,$cin));
+getData("users","id = ? and cin = ? ",array($id,$cin));
 
 
 
