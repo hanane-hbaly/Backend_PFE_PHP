@@ -11,7 +11,8 @@ if ($result) {
        // $vendeurs[] = $row['nom_complet'];
        $vendeurs[] = $row;
     }
+   // echo json_encode( $vendeurs);
 
-   echo json_encode(array("status" => "success", "data" => $vendeurs));
+    echo json_encode(array("status" => "success", "data" => $vendeurs));
  }
 ?>

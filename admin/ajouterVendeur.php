@@ -3,7 +3,8 @@
 include "../connect.php";
 
 $id = filterRequest("id");
-$cin = filterRequest("cin");
+//$cin = filterRequest("cin");
+$cin=sha1($_POST['cin']);
  $type = "vendeur";
  $nomv = filterRequest("nomv");
  $prenomv = filterRequest("prenomv");

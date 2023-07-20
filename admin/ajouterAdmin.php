@@ -3,7 +3,8 @@
 include "../connect.php";
 
 $id = filterRequest("id");
-$cin = filterRequest("cin");
+//$cin = filterRequest("cin");
+$cin=sha1($_POST['cin']);
  $type = "admin";
 
 $stmt = $con->prepare("SELECT * FROM users WHERE id = ? ");
